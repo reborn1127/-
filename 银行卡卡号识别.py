@@ -9,7 +9,6 @@ FIRST_NUMBER = {
 	"6": "Discover Card"
 }
 #对模板图像做预处理
-
 img=cv.imread("yhkmb.png")
 gray=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
 ret,ref=cv.threshold(gray,10,255,cv.THRESH_BINARY_INV)#此步骤，应该加前面的ret,否则会报错
@@ -23,22 +22,18 @@ for(i,c)in enumerate(refCnts):#i是轮廓索引，c是对应轮廓，则完成�
     roi=ref[y:y+h,x:x+w]#每个数字的外接矩形的尺寸
     roi=cv.resize(roi,(57,88))#重置外接矩形的尺寸至合适大小
     digits[i]=roi#每个数字对应一个模板
-
 #对待检测图像做预处理
 recKernel=cv.getStructuringElement(cv.MORPH_RECT,(10,3))#为保证检测信息准确，需去除银行卡页面杂乱信
 sqKernel=cv.getStructuringElement(cv.MORPH_RECT,(2,2))#因此需要对图像做形态学操作，故在此设立卷积核
-
 image=cv.imread("yhk.png")
 image=cv.resize(image,(250,200))
 gray=cv.cvtColor(image,cv.COLOR_BGR2GRAY)
 tophat=cv.morphologyEx(gray,cv.MORPH_TOPHAT,recKernel)#根据字体的大小来选定合适的核；顶帽操作来突出明亮的区域
-
 gradx=cv.Sobel(tophat,ddepth=cv.CV_32F,dx=1,dy=0,ksize=3)#对X还是对Y需要或者同时需要根据实际需要来设定，图像梯度
 gradx=np.absolute(gradx)#取绝对值
 (minVal,maxVal)=(np.min(gradx),np.max(gradx))#归一化
 gradx=(255*((gradx-minVal)/(maxVal-minVal)))
 gradx=gradx.astype("uint8")
-
 gradx=cv.morphologyEx(gradx,cv.MORPH_CLOSE,recKernel)#执行闭操作，使图像上的内容成块出现
 ret,thresh=cv.threshold(gradx,0,255,cv.THRESH_BINARY|cv.THRESH_OTSU)#低阈值之所以设为0，是因为后面的方法选用了OTSU自动设定阈值，适合双峰的图像操作
 thresh=cv.morphologyEx(thresh,cv.MORPH_CLOSE,sqKernel)#本次闭操作是为了填补二值化图像中块中的不完整小块
@@ -78,6 +73,5 @@ for (i,(gx,gy,gw,gh))in enumerate(locs):#遍历每一块中的每一个数字
 print("Credit Card Type: {}".format(FIRST_NUMBER[output[0]]))
 print("Credit Card #: {}".format("".join(output)))
 cv.imshow("Image",image)
-
 cv.waitKey(0)
 cv.destroyAllWindows()
