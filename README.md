@@ -9,10 +9,16 @@
   数字图像处理报告、数字图像处理PPT、数字图像处理过程图、实验代码
 ## 5.安装环境
   在python3.8环境下安装opencv，安装命令为"pip install opencv-python"。（在Anaconda Prompt终端输入）
+  
   在python3.8环境下安装numpy，安装命令为"pip install numpy"。（在Anaconda Prompt终端输入）
+  
   在python3.8环境下安装matplotlib，安装命令为"pip install matplotlib"。（在Anaconda Prompt终端输入）
+  
   在python3.8环境下安装imutils，安装命令为"pip install imutils"。（在Anaconda Prompt终端输入）
 ## 6.参与人员
-   代码部分————何磊、罗永乐
-   答辩部分————刘梁兵
-   PPT制作————林超煌
+  代码部分————何磊、罗永乐
+  
+  答辩部分————刘粱兵
+  
+  PPT制作————林超煌
+  
